@@ -1,0 +1,199 @@
+{
+  "testUnits": [
+    {
+      "name": "Login",
+      "endpointDetails": {
+        "url": "${ endpointRoot }/user/login",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          // "body" is optional.
+          "email": "EMAIL@ADDRESS.com",
+          "password": "PASSWORD"
+        }
+      },
+      // "variablesToSet" is optional. If you want to use a variable in a later test unit, you need to set it here.
+      // path can begin with responseBody or responseHeader
+      // valid examples: "responseBody.token.accessToken", "responseBody[1].item[0].id", "responseBody.array.2.name"
+      // valid examples: "responseHeader.x-auth-token"
+      // variables that are set can then be used as ${ variableName } *anywhere* in subsequent test units except the name.
+      // set numbers or boolean with the following syntax:
+      // "myNumber": "${ someId : number }" -> OUTPUT "myNumber": 123
+      // "myBoolean": "${ someBool : boolean}" -> OUTPUT "myBoolean": true
+      "variablesToSet": [
+        {
+          "variableName": "accessToken",
+          "path": "responseBody.token.accessToken"
+        }
+      ]
+    },
+    {
+      "name": "Login with wrong password",
+      "endpointDetails": {
+        "url": "${ endpointRoot }/user/login",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "email": "pierre.siza@gmail.com",
+          "password": "abcd12345"
+        }
+      },
+      "validation": {
+        "statusCode": 400 // Optional. If not present, default check for 200. Valid Examples: 200, ["200-299"], ["400-499", "200-299"]
+      }
+    },
+    {
+      "name": "Get Organizations",
+      "endpointDetails": {
+        "url": "${ endpointRoot }/organization/tree",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${ accessToken }"
+        }
+      },
+      "variablesToSet": [
+        {
+          "variableName": "productContentId",
+          "path": "responseBody[0].products[0].contentId"
+        },
+        {
+          "variableName": "productId",
+          "path": "responseBody[0].products[0].id"
+        }
+      ]
+      // With no validation set, Witcher will at least attempt to validate statusCode = 200
+    },
+    {
+      "name": "Get Product Entity using Id in Request Body",
+      "description": "Get product with id of ${ productId }",
+      "endpointDetails": {
+        "url": "${ endpointRoot }/product/",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${ accessToken }"
+        },
+        "body": {
+          "id": "${ productId : number }" // You can add the :number or :boolean declaration
+          // Output -> "id": 123
+        }
+      }
+    },
+    {
+      "name": "Get all Environments for a Product",
+      "endpointDetails": {
+        "url": "${ endpointRoot }/product/${ productContentId }/env",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${ accessToken }"
+        }
+      },
+      "variablesToSet": [
+        {
+          "variableName": "envContentId",
+          "path": "responseBody[0].contentId"
+        },
+        {
+          "variableName": "envName",
+          "path": "responseBody[0].name"
+        }
+      ]
+    },
+    {
+      "name": "Create a Folder",
+      "description": "Test Folder Description",
+      "validation": {
+        // Supports only a row count delta on any table for now.
+        // Will do a count on the table before and after the test unit and compare the difference.
+        "tablesToCheck": [
+          {
+            "tableName": "ConfigFolders",
+            "expectedRowCountChange": 1
+            // "rowChecks": [
+            //     {
+            //         "queryFilter": {
+            //             "id": "${ id }"
+            //         },
+            //         "rowCountAssertion": "value = 1",
+            //         "columnChecks": {
+            //             "configName": "value = 'configNameTest'"
+            //         }
+            //     }
+            // ]
+          },
+          {
+            "tableName": "ActionLogs",
+            "expectedRowCountChange": 1
+          }
+        ],
+        "tablesHaveNoUnexpectedRowCountChanges": true,
+        "assertions": [
+          {
+            "path": "responseBody.name",
+            "assertion": "exists" // a value at the path must exist.
+          },
+          {
+            "path": "responseBody.name",
+            "assertion": "typeof string" // "typeof [string, number, boolean, object, array, null]": the type of the value at the path must match the comparison.
+          },
+          {
+            "path": "responseBody.name",
+            "assertion": "value = 'myValue'" // "value [<,>,<=,>=,=,!=] X": the value at the path must match the comparison against X.
+          },
+          {
+            "path": "responseBody.array",
+            "assertion": "length >= ${ someNumber }" // you can use variables in assertions!
+          }
+        ]
+      },
+      "endpointDetails": {
+        "url": "${ endpointRoot }/product/${ productContentId }/env/${ envContentId }/folders",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${ accessToken }"
+        },
+        "body": {
+          "name": "Auto Test Folder ${random.hash}",
+          "parentId": 0
+        }
+      },
+      "variablesToSet": [
+        {
+          "path": "responseBody.id",
+          "variableName": "folderId"
+        }
+      ]
+    },
+    {
+      "name": "Delete a Folder",
+      "description": "Test Folder Description",
+      "validation": {
+        "tablesToCheck": [
+          {
+            "tableName": "ConfigFolders",
+            "expectedRowCountChange": -1
+          },
+          {
+            "tableName": "ActionLogs",
+            "expectedRowCountChange": 1
+          }
+        ]
+      },
+      "endpointDetails": {
+        "url": "${ endpointRoot }/product/${ productContentId }/env/${ envContentId }/folders/id/${ folderId }",
+        "method": "DELETE",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${ accessToken }"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "testUnitsConfigs": ["noDbTestUnits.json"],
+  "initialTestRunVariables": {
+    "endpointRoot": "http://localhost:5002/api"
+  }
+}
