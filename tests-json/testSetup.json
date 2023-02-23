@@ -1,0 +1,17 @@
+{
+  "testUnitsConfigs": ["testUnits.json"], // REQUIRED: This is the name of the file that contains your test units. Should be in the same directory.
+  "initialTestRunVariables": {
+    // OPTIONAL: You can put any key:value pair here. They will be available in your test units.
+    "endpointRoot": "http://localhost:5002/api",
+    "apiKey": "abc123"
+  },
+  "testRunnerOptions": {
+    // OPTIONAL. All params below are optional and false by default if not set.
+    "debugResponseOptions": {
+      "showRequestErrors": false, // Show the full request error (no response received).
+      "showStatusCode": false, // Show the status code of the response.
+      "showHeaders": false, // Show all of the headers of the response.
+      "showBody": false // Show the full body of the response.
+    }
+  }
+}
