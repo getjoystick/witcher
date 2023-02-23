@@ -1,0 +1,36 @@
+name: Verify build
+
+on:
+  push:
+
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Run CI
+        run: npm ci
+      - name: Run Lint
+        run: npm run lint
+      - name: Run Build
+        run: npm run build
+
+      - name: Shutdown pre-installed Ubuntu MySQL
+        run: sudo service mysql stop
+      - name: Run MySQL server for running test
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          mysql version: "5.7"
+          mysql database: "dbname"
+          mysql user: "user"
+          mysql password: "password"
+      - name: Wait for MySQL
+        run: |
+          while ! mysqladmin ping --host=127.0.0.1 --password=password --user=user --silent; do
+            sleep 1
+          done
+      - name: Run Test
+        run: npm run test

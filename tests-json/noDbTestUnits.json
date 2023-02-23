@@ -1,0 +1,124 @@
+{
+  "testUnits": [
+    {
+      "name": "Login",
+      "endpointDetails": {
+        "url": "${ endpointRoot }/user/login",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "email": "EMAIL@ADDRESS.COM",
+          "password": "PASSWORD"
+        }
+      },
+      "variablesToSet": [
+        {
+          "variableName": "accessToken",
+          "path": "responseBody.token.accessToken"
+        }
+      ]
+    },
+    {
+      "name": "Get Organizations and Products Tree",
+      "endpointDetails": {
+        "url": "${ endpointRoot }/organization/tree",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${ accessToken }"
+        }
+      },
+      "variablesToSet": [
+        {
+          "variableName": "productContentId",
+          "path": "responseBody[0].products[0].contentId"
+        }
+      ]
+    },
+    {
+      "name": "Get all Environments for a Product",
+      "endpointDetails": {
+        "url": "${ endpointRoot }/product/${ productContentId }/env",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${ accessToken }"
+        }
+      },
+      "variablesToSet": [
+        {
+          "variableName": "envContentId",
+          "path": "responseBody[0].contentId"
+        },
+        {
+          "variableName": "envName",
+          "path": "responseBody[0].name"
+        }
+      ]
+    },
+    {
+      "name": "Get tree for a given Environment",
+      "endpointDetails": {
+        "url": "${ endpointRoot }/product/${ productContentId }/env/${ envContentId }/tree",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${ accessToken }"
+        }
+      }
+    },
+    {
+      "name": "Create a Folder",
+      "description": "Test Folder Description",
+      "endpointDetails": {
+        "url": "${ endpointRoot }/product/${ productContentId }/env/${ envContentId }/folders",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${ accessToken }"
+        },
+        "body": {
+          "name": "Auto Test Folder ${random.hash}",
+          "parentId": 0
+        }
+      },
+      "variablesToSet": [
+        {
+          "path": "responseBody.id",
+          "variableName": "folderId"
+        }
+      ]
+    },
+    {
+      "name": "Delete a Folder",
+      "description": "Test Folder Description",
+      "endpointDetails": {
+        "url": "${ endpointRoot }/product/${ productContentId }/env/${ envContentId }/folders/id/${ folderId }",
+        "method": "DELETE",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${ accessToken }"
+        }
+      }
+    },
+    {
+      "name": "Login with wrong password",
+      "endpointDetails": {
+        "url": "${ endpointRoot }/user/login",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "email": "pierre.siza@gmail.com",
+          "password": "abcd12345"
+        }
+      },
+      "validation": {
+        "statusCode": 400
+      }
+    }
+  ]
+}
