@@ -1,37 +1,40 @@
 # Witcher API Tester
 
-Witcher is a lightweight and fast API tester that is configuration driven and easy to maintain.
+![witcher-450](https://github.com/getjoystick/witcher/assets/127026916/dad5b6fc-033b-484b-a3dd-50d277bf1a61)
 
-- Make API calls, then validate the response with assertions.
-- Set variables based on the response, then use them in subsequent tests.
-- Check for side-effects in a database.
+Witcher is a lightweight, easy to maintain and fast API tester that is configuration driven.
+
+- No need to learn a complicated system
+- Make API calls, then validate any part of the response header or body.
+- Set variables based on the response, then use them in subsequent tests/calls.
+- Check for side-effects in a database after each call.
 
 # Running the Project Locally
 
 ## Setup / First Time
 
 - Run `npm i` the first time to install dependencies.
-- Update `./test-json/testSetup.json` and `./test-json/testUnits.json` to fit your API
+- Update `./test-json/testSetup.json` and `./test-json/testUnits.json` to fit your API.
 
 ## Running
 
-- `npm run serve:dev` This will run the project and give you a command line prompt.
-- Choose options:
+- `npm run serve` This will run the project and give you a command line prompt.
+- Options to Toggle:
   - `Interactive` – run tests one by one
-  - `Stop on failure` - stop the test suite on the first failure.
+  - `Stop on Failure` - stop the test suite on the first failure.
 - Choose `File on your computer` as data source
 - Select one of the files placed in the `./tests-json` folder
-- Optionally select secrets from `./tests-json/secrets` folder
+- Optionally select database connection secrets from `./tests-json/secrets` folder
 
 # Running the Project with Joystick-Hosted Configs
 
-With Joystick hosted configs, your entire team can collaborate easily on your tests.
+Joystick is robust remote configuration service. Using Witcher with Joystick-hosted configs means your entire team can collaborate and update your tests.
 
 ## Setup / First Time
 
 - Run `npm i` for the first time to install dependencies.
 - Create an account on [Joystick](https://app.getjoystick.com/)
-- Create free organization, product and environment
+- Create an organization, product and environment for your testing configs. 
 - Add the test suite:
   - Click on "Create config" on the page of environment
   - Paste the contents of `./test-json/testUnits.json` into editor
@@ -48,13 +51,13 @@ With Joystick hosted configs, your entire team can collaborate easily on your te
 
 ## Running
 
-- `npm run serve:dev` This will run the project and give you a command line prompt.
+- `npm run serve` This will run the project and give you a command line prompt.
 - Choose options:
   - `Interactive` – run tests one by one
   - `Stop on failure` - stop the test suite on the first failure
 - Choose `Joystick` as data source
 - For the first time you'll be requested to name the environment and specify the API key. You can find the API key in the settings of the environment on Joystick.
-- Paste the `Content ID` of the root config created in the previous step
+- Paste the `ContentID` of the root config created in the previous step
 - Select one of the files placed in the `./tests-json` folder
 - Optionally select secrets from `./tests-json/secrets` folder
 - The environment info is stored locally (`homeDirectory + "/.witcher/.joystick.json"`) so when you run `witcher` again, you can select an existing profile.
@@ -66,9 +69,21 @@ With Joystick hosted configs, your entire team can collaborate easily on your te
 - For an example with comments if you have have a PostgreSQL db to check see: `./tests-json/testSetup.json` and `./tests-json/testUnits.json`
 - For an example with comments for just API validation see: `./tests-json/noDbTestSetup.json` and `./tests-json/noDbTestUnits.json`
 
-## The Test Setup Config
+## Schematics
 
-This is entry point / starting point of a test. This should be a .json file in the ./tests-json folder.
+### Overview
+
+![Screenshot 2023-08-08 at 11 05 25 AM](https://github.com/getjoystick/witcher/assets/127026916/907fa7dd-2fd4-4e99-ad3e-ca3d514cc63a)
+At least two configs are required to run Witcher: the "root" config and a test units config with one or more API tests defined.
+
+### Running Logic
+
+![Screenshot 2023-08-08 at 11 06 12 AM](https://github.com/getjoystick/witcher/assets/127026916/3f1b1fd3-1eca-4807-bd39-5ad4b3edd4cb)
+
+
+## The Test Setup "Root" Config
+
+This is entry point / starting point of a test run. This should be a .json file in the ./tests-json folder.
 
 ```jsonc
 {
@@ -100,6 +115,10 @@ This is entry point / starting point of a test. This should be a .json file in t
   }
 }
 ```
+### Debug Mode
+
+- You can show the full error, if any, with the request by setting `testRunningOptions.debugResponseOptions.showRequestErrors`.
+- You can show the full response status code, headers and body by setting the options in the Test Setup config `testRunnerOptions.debugResponseOptions` object. Reference testSetup.json for usage.
 
 ## The Secrets Config
 
@@ -120,11 +139,6 @@ This file should be in the `./tests-json/secrets` folder
 }
 ```
 
-## Debug Mode
-
-- You can show the full error, if any, with the request by setting `testRunningOptions.debugResponseOptions.showRequestErrors`.
-- You can show the full response status code, headers and body by setting the options in the Test Setup config `testRunnerOptions.debugResponseOptions` object. Reference testSetup.json for usage.
-
 ## The Test Units Config
 
 This should be a .json file that is in the ./tests-json folder.
@@ -136,6 +150,8 @@ This should be a .json file that is in the ./tests-json folder.
 ```
 
 ### A Single Test Unit
+
+![Screenshot 2023-08-08 at 11 05 08 AM](https://github.com/getjoystick/witcher/assets/127026916/4fe6f5db-0d42-4fac-b497-18fbc6eea9fd)
 
 This is one Test Unit. It goes inside the "testUnits" array of the Test Units config.
 
@@ -448,3 +464,7 @@ Get the config!
    ------------------
 
 ```
+
+---
+
+Happy testing! Contributions welcome!
