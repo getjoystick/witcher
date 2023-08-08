@@ -69,6 +69,18 @@ Joystick is robust remote configuration service. Using Witcher with Joystick-hos
 - For an example with comments if you have have a PostgreSQL db to check see: `./tests-json/testSetup.json` and `./tests-json/testUnits.json`
 - For an example with comments for just API validation see: `./tests-json/noDbTestSetup.json` and `./tests-json/noDbTestUnits.json`
 
+## Schematics
+
+### Overview
+
+![Screenshot 2023-08-08 at 11 05 25 AM](https://github.com/getjoystick/witcher/assets/127026916/907fa7dd-2fd4-4e99-ad3e-ca3d514cc63a)
+At least two configs are required to run Witcher: the "root" config and a test units config with one or more API tests defined.
+
+### Running Logic
+
+![Screenshot 2023-08-08 at 11 06 12 AM](https://github.com/getjoystick/witcher/assets/127026916/3f1b1fd3-1eca-4807-bd39-5ad4b3edd4cb)
+
+
 ## The Test Setup "Root" Config
 
 This is entry point / starting point of a test run. This should be a .json file in the ./tests-json folder.
@@ -103,6 +115,10 @@ This is entry point / starting point of a test run. This should be a .json file 
   }
 }
 ```
+### Debug Mode
+
+- You can show the full error, if any, with the request by setting `testRunningOptions.debugResponseOptions.showRequestErrors`.
+- You can show the full response status code, headers and body by setting the options in the Test Setup config `testRunnerOptions.debugResponseOptions` object. Reference testSetup.json for usage.
 
 ## The Secrets Config
 
@@ -123,11 +139,6 @@ This file should be in the `./tests-json/secrets` folder
 }
 ```
 
-## Debug Mode
-
-- You can show the full error, if any, with the request by setting `testRunningOptions.debugResponseOptions.showRequestErrors`.
-- You can show the full response status code, headers and body by setting the options in the Test Setup config `testRunnerOptions.debugResponseOptions` object. Reference testSetup.json for usage.
-
 ## The Test Units Config
 
 This should be a .json file that is in the ./tests-json folder.
@@ -139,6 +150,8 @@ This should be a .json file that is in the ./tests-json folder.
 ```
 
 ### A Single Test Unit
+
+![Screenshot 2023-08-08 at 11 05 08 AM](https://github.com/getjoystick/witcher/assets/127026916/4fe6f5db-0d42-4fac-b497-18fbc6eea9fd)
 
 This is one Test Unit. It goes inside the "testUnits" array of the Test Units config.
 
@@ -451,3 +464,7 @@ Get the config!
    ------------------
 
 ```
+
+---
+
+Happy testing! Contributions welcome!
