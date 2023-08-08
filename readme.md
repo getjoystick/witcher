@@ -1,6 +1,6 @@
 # Witcher API Tester
 
-![witcher-800](https://github.com/getjoystick/witcher/assets/127026916/36c20a82-4828-4887-81b8-46e8f7c54d43)
+![witcher-450](https://github.com/getjoystick/witcher/assets/127026916/dad5b6fc-033b-484b-a3dd-50d277bf1a61)
 
 Witcher is a lightweight, easy to maintain and fast API tester that is configuration driven.
 
