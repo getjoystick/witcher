@@ -1,5 +1,5 @@
 {
-  "testUnitsConfigs": ["testWebserverEventualConsistency.json"],
+  "testUnitsConfigs": ["testWebServerEventualConsistency.json"],
   "initialTestRunVariables": {
     "endpointRoot": "http://localhost:5070"
   },
