@@ -1,0 +1,14 @@
+{
+  "testUnitsConfigs": ["testWebserverEventualConsistency.json"],
+  "initialTestRunVariables": {
+    "endpointRoot": "http://localhost:5070"
+  },
+  "testRunnerOptions": {
+    "debugResponseOptions": {
+      "showRequestErrors": true,
+      "showStatusCode": true,
+      "showHeaders": true,
+      "showBody": true
+    }
+  }
+}

@@ -14,6 +14,7 @@ export type TestConfig = {
   };
   endpointDetails: EndpointDetails;
   variablesToSet?: PathToVariableMap[];
+  waitForMs?: number;
 };
 
 export type EndpointDetails = {

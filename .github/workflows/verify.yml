@@ -35,3 +35,21 @@ jobs:
           done
       - name: Run Test
         run: npm run test
+  e2e-verification:
+    name: "Verify CLI tool E2E"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Run CI
+        run: npm ci
+      - name: Run Lint
+        run: npm run lint
+      - name: Run Build
+        run: npm run build
+      - name: Run test web-server
+        run: npm run start:test-ws-bg
+      - name: Run E2E
+        run: node . local ./tests/configs/testWebServerSetup.json

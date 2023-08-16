@@ -13,6 +13,7 @@ export const testUnitsConfigValidator = new Ajv().compile({
         properties: {
           name: { type: "string" },
           description: { type: "string" },
+          waitForMs: { type: "number", minimum: 0 },
           endpointDetails: {
             type: "object",
             properties: {

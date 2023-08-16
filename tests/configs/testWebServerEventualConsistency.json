@@ -1,0 +1,58 @@
+{
+  "testUnits": [
+    {
+      "name": "Getting list of TODOs",
+      "endpointDetails": {
+        "url": "${ endpointRoot }/api/eventual-consistency/todo",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "variablesToSet": [
+        {
+          "variableName": "todosBeforeCreation",
+          "path": "responseBody.todos"
+        }
+      ]
+    },
+    {
+      "name": "Create new TODO",
+      "validation": {
+        "assertions": [
+          {
+            "path": "responseBody.newTodo",
+            "assertion": "exists"
+          }
+        ]
+      },
+      "endpointDetails": {
+        "url": "${ endpointRoot }/api/eventual-consistency/todo",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "title": "Auto Test TODO ${random.hash}"
+        }
+      },
+      "variablesToSet": [
+        {
+          "variableName": "newTodoId",
+          "path": "responseBody.newTodo.id"
+        }
+      ]
+    },
+    {
+      "name": "Verify that created TODO is in place",
+      "waitForMs": 1000,
+      "endpointDetails": {
+        "url": "${ endpointRoot }/api/eventual-consistency/todo/${ newTodoId }",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

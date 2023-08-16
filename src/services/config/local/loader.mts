@@ -9,7 +9,7 @@ export class LocalLoader implements ConfigLoader {
   public constructor(private readonly localFilePath: string) {}
 
   private getTestsFolder() {
-    return path.dirname(this.localFilePath);
+    return path.resolve(path.dirname(this.localFilePath));
   }
 
   async loadAndValidateRootConfig(): Promise<SetupConfigRaw> {

@@ -11,7 +11,8 @@
     "test:unit": "jest --config ./jest.unit.ts",
     "build": "tsc -p tsconfig.json --outDir ./dist",
     "serve": "ts-node ./src/index.mts",
-    "serve:dev": "nodemon",
+    "serve:dev": "./start-dev.sh",
+    "start:test-ws-bg": "(cd ./tests/web-server && npm ci && npm run start &) && npx --yes wait-port http://127.0.0.1:5070/healthcheck  -t 20000",
     "lint": "eslint . && prettier . --check",
     "lint-fix": "prettier . --write && eslint . --fix"
   },

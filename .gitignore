@@ -4,5 +4,5 @@ node_modules
 .idea
 
 joystick-*
-tests-json/secrets/**/*
+tests/configs/secrets/**/*
 dist/

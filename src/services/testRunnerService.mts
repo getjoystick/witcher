@@ -61,6 +61,11 @@ export default class TestRunnerService {
     if (testConfig?.description) console.info(`${testConfig.description}`);
     console.info(`🔗🔗🔗🔗🔗 ${testConfig.endpointDetails.method.toUpperCase()} ${testConfig.endpointDetails.url}`);
 
+    if (testConfig.waitForMs) {
+      console.info(`⏳⏳⏳⏳⏳ Waiting for ${testConfig.waitForMs}ms`);
+      await new Promise((resolve) => setTimeout(resolve, testConfig.waitForMs));
+    }
+
     if (
       typeof this.dbService !== "undefined" &&
       (testConfig.validation?.tablesToCheck || testConfig.validation?.tablesHaveNoUnexpectedRowCountChanges)
