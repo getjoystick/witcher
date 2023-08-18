@@ -1,0 +1,6 @@
+{
+  "ext": ".ts,.js,.mts,.mjs",
+  "ignore": [],
+  "exec": "node --inspect --loader ts-node/esm ./index.mts",
+  "restartable": true
+}

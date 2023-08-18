@@ -9,30 +9,37 @@ Witcher is a lightweight, easy to maintain and fast API tester that is configura
 - Set variables based on the response, then use them in subsequent tests/calls.
 - Check for side-effects in a database after each call.
 
-# Running the Project Locally
+# Prerequisites
 
-## Setup / First Time
+- Node.js 18.0 or higher
+- `npm`
 
-- Run `npm i` the first time to install dependencies.
+# Installation
+
+Witcher can be run using the `npx` command. This will download the latest version of Witcher and run it.
+
+```bash
+npx witcher
+```
+
+Otherwise, you can install `witcher` globally with `npm i -g witcher` which will allow you to run `witcher` without `npx`
+
+> **Note**
+> If you use global installation – make sure your "PATH" environment variable contains the
+> folder where `npm` puts the binaries
+
+# First-time setup
+
+## Local Configs
+
 - Update `./test-json/testSetup.json` and `./test-json/testUnits.json` to fit your API.
 
-## Running
+## Running the Project with Joystick-Hosted Configs
 
-- `npm run serve` This will run the project and give you a command line prompt.
-- Options to Toggle:
-  - `Interactive` – run tests one by one
-  - `Stop on Failure` - stop the test suite on the first failure.
-- Choose `File on your computer` as data source
-- Select one of the files placed in the `./tests-json` folder
-- Optionally select database connection secrets from `./tests-json/secrets` folder
+Joystick is a robust remote configuration service. Using Witcher with Joystick-hosted configs means your entire team can collaborate and update your tests.
 
-# Running the Project with Joystick-Hosted Configs
+### Setup / First Time
 
-Joystick is robust remote configuration service. Using Witcher with Joystick-hosted configs means your entire team can collaborate and update your tests.
-
-## Setup / First Time
-
-- Run `npm i` for the first time to install dependencies.
 - Create an account on [Joystick](https://app.getjoystick.com/)
 - Create an organization, product and environment for your testing configs.
 - Add the test suite:
@@ -49,25 +56,65 @@ Joystick is robust remote configuration service. Using Witcher with Joystick-hos
   - Specify the name of the setup config in the "Content ID" field (e.g. "testsetup-dev")
   - Click on "Save"
 
-## Running
+# Running in interactive mode
 
-- `npm run serve` This will run the project and give you a command line prompt.
+## Local Configs
+
+- Run `npx witcher`
+- Options to Toggle:
+  - `Interactive` – run tests one by one
+  - `Stop on Failure` - stop the test suite on the first failure.
+- Choose `File on your computer` as data source
+- Select one of the files placed in the current working directory
+- Optionally select database connection secrets from `./secrets` folder
+
+## Joystick-Hosted Configs
+
+- `npx witcher`
 - Choose options:
   - `Interactive` – run tests one by one
   - `Stop on failure` - stop the test suite on the first failure
-- Choose `Joystick` as data source
-- For the first time you'll be requested to name the environment and specify the API key. You can find the API key in the settings of the environment on Joystick.
-- Paste the `ContentID` of the root config created in the previous step
-- Select one of the files placed in the `./tests-json` folder
-- Optionally select secrets from `./tests-json/secrets` folder
+- Choose `Joystick` as a data source
+- For the first time, you'll be requested to name the environment and specify the API key. You can find the API key in the settings of the environment on Joystick.
+- Paste the `ContentID` of the root config created in the first-time setup step
+- Optionally select secrets from `./secrets` folder
 - The environment info is stored locally (`homeDirectory + "/.witcher/.joystick.json"`) so when you run `witcher` again, you can select an existing profile.
+
+# Running in CI environment (non-interactive mode)
+
+## In Github Actions
+
+Please refer to the [documentation](https://github.com/marketplace/actions/run-api-test-with-witcher) of running Witcher in Github Actions
+
+## In other CI environments
+
+Witcher supports running in non-interactive mode and passing all necessary parameters as CLI arguments.
+Please refer to the `--help` output for the list of available options.
+
+```bash
+npx witcher --help
+```
+
+Typical usage for local config may look like this:
+
+```bash
+npx witcher local ./testWebServerSetup.json --secret ./path/to/secret.json
+```
+
+And for Joystick-hosted config:
+
+```bash
+npx witcher joystick --apiKey 'xxxxxxxxxxx' --configId 'test-webserver-setup' --secret ./path/to/secret.json
+```
+
+The application will exit with code `0` if all tests passed and `1` if at least one test failed.
 
 # Notes
 
 - Supporting PostgreSQL and mySQL database out-of-the-box. Can be easily extended.
 - Witcher requires two configurations: a Test Setup "root" config and one or more Test Units config. The Test Setup config can reference or more Test Units config.
-- For an example with comments if you have have a PostgreSQL db to check see: `./tests-json/testSetup.json` and `./tests-json/testUnits.json`
-- For an example with comments for just API validation see: `./tests-json/noDbTestSetup.json` and `./tests-json/noDbTestUnits.json`
+- For an example with comments if you have have a PostgreSQL db to check see: `./tests/configs/testSetup.json` and `./tests/configs/testUnits.json`
+- For an example with comments for just API validation see: `./tests/configs/noDbTestSetup.json` and `./tests/configs/noDbTestUnits.json`
 
 ## Schematics
 
@@ -83,7 +130,7 @@ At least two configs are required to run Witcher: the "root" config and a test u
 
 ## The Test Setup "Root" Config
 
-This is entry point / starting point of a test run. This should be a .json file in the ./tests-json folder.
+This is entry point / starting point of a test run. This should be a .json file in the directory where you want to run `npx witcher`.
 
 ```jsonc
 {
@@ -124,7 +171,7 @@ This is entry point / starting point of a test run. This should be a .json file 
 ## The Secrets Config
 
 If you want to share the original Setup Config with other developers, but don't want to share your secrets, you can put them in a separate file.
-This file should be in the `./tests-json/secrets` folder
+This file should be in the `./secrets` folder with the `.json` extension.
 
 ```jsonc
 {
@@ -142,7 +189,7 @@ This file should be in the `./tests-json/secrets` folder
 
 ## The Test Units Config
 
-This should be a .json file that is in the ./tests-json folder.
+This should be a .json file that is in the same folder as your root config.
 
 ```jsonc
 {
