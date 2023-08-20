@@ -2,14 +2,35 @@
 
 ![witcher-icon-250](https://github.com/getjoystick/witcher/assets/1041852/38a968f9-7e26-4cb7-8da0-e2027bb3018f)
 
-Witcher is a lightweight, easy to maintain, and fast API tester that is configuration driven.
+Witcher is a lightweight and easy to maintain API tester that is configuration driven. Run with just two simple JSON configs; no need to learn a complicated system.
 
-- No need to learn a complicated system.
 - Make API calls, then validate any part of the response header or body.
 - Set variables using any part of the response body or header, then use the variables in subsequent tests/calls.
-- Check for side-effects in a database (currently PostgreSQL or mySQL) after each API call.
-- Run locally, or use with [Github Actions](https://github.com/marketplace/actions/run-api-test-with-witcher) for pre/post deployment API validation.
+- Check for side-effects in a database (PostgreSQL or mySQL supported) after each API call.
 - Contributions welcome!
+
+<table>
+  <tr>
+    <td>✅</td>
+    <td>Run Locally, Interactive Mode</td>
+    <td>All configs stored locally. API calls are made from your local machine to the specified endpoints and database connections.</td>
+  </tr>
+  <tr>
+    <td>✅</td>
+    <td>Use Configs Hosted on Joystick</td>
+    <td>Configs are retrieved from the <a href="https://www.getjoystick.com">Joystick</a> remote config service, where your entire team then can keep them up-to-date, and always run with the latest configs.</td>
+  </tr>
+  <tr>
+    <td>✅</td>
+    <td>Run in Non-Interactive Mode</td>
+    <td>Perfect for running on a remote machine. Run using one command line. Use configs from the working directory, or grab them from Joystick by passing in API key and config ContentId.</td>
+  </tr>
+  <tr>
+    <td>✅</td>
+    <td>Run as Github Action</td>
+    <td>The <a href="https://github.com/marketplace/actions/run-api-test-with-witcher">Witcher Github Action</a> is great for integrating with any Github Action CI/CD pipeline for pre/post deployment API validation. Can also use configs that you push on during the deployment process, or retrieve them from Joystick.</td>
+  </tr>
+</table>
 
 # Prerequisites
 
@@ -32,12 +53,27 @@ Otherwise, you can install `witcher` globally with `npm i -g witcher` which will
 
 # TLDR; Jump Right In!
 
-- Download the two files in the `witcher-demo` folder of this repo.
-- Run `npx witcher` in the same directory as the two files. Press enter again to proceed with default options. ![Step 1](https://github.com/getjoystick/witcher/assets/1041852/5bca0f23-4108-49b0-9a52-711804b64426)
-- Select option 2 to run locally. ![Step 2](https://github.com/getjoystick/witcher/assets/1041852/318339e3-e061-4e36-a87a-7d1db5ecc73b)
-- For the set setup config, select `demo-setup.json`. ![Step 3](https://github.com/getjoystick/witcher/assets/1041852/38c9974a-7f0a-482b-a99d-9e2f0f0bf2a6)
-- Continue without secrets, since we don't need to check a DB. ![Step 4](https://github.com/getjoystick/witcher/assets/1041852/6fa4e380-6a0e-483a-9083-9aea577fd1c4)
-- The test will run and you will get a report! ![Step 5](https://github.com/getjoystick/witcher/assets/1041852/c46a58fc-5366-4760-b550-5947753eed6a)
+1. Download the two files in the `witcher-demo` folder of this repo.
+
+2. Run `npx witcher` in the same directory as the two files. Press enter again to proceed with default options.
+
+   ![Step 1](https://github.com/getjoystick/witcher/assets/1041852/5bca0f23-4108-49b0-9a52-711804b64426)
+
+3. Select option 2 to run locally.
+
+   ![Step 2](https://github.com/getjoystick/witcher/assets/1041852/318339e3-e061-4e36-a87a-7d1db5ecc73b)
+
+4. For the set setup config, select `demo-setup.json`.
+
+   ![Step 3](https://github.com/getjoystick/witcher/assets/1041852/38c9974a-7f0a-482b-a99d-9e2f0f0bf2a6)
+
+5. Continue without secrets, since we don't need to check a DB.
+
+   ![Step 4](https://github.com/getjoystick/witcher/assets/1041852/6fa4e380-6a0e-483a-9083-9aea577fd1c4)
+
+6. The test will run and you will get a report!
+
+   ![Step 5](https://github.com/getjoystick/witcher/assets/1041852/c46a58fc-5366-4760-b550-5947753eed6a)
 
 # Setup the Configuration Files
 
@@ -47,7 +83,7 @@ Otherwise, you can install `witcher` globally with `npm i -g witcher` which will
 
 ## Running with Joystick Hosted Configs
 
-[Joystick](https://www.getjoystick.com/) is a robust and modern remote configuration service. Using Witcher with Joystick-hosted configs means your entire team can collaborate and update your tests.
+[Joystick](https://www.getjoystick.com/) is a robust and modern remote configuration service. Using Witcher with Joystick-hosted configs means your entire team can collaborate and update the test configs. Everyone can see exactly what is being run, and update them instantly.
 
 ### Setup / First Time
 
