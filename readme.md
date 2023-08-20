@@ -7,8 +7,8 @@ Witcher is a lightweight, easy to maintain, and fast API tester that is configur
 - No need to learn a complicated system.
 - Make API calls, then validate any part of the response header or body.
 - Set variables using any part of the response body or header, then use the variables in subsequent tests/calls.
-- Check for side-effects in a database after each call.
-- Run locally, or use with Github Actions for pre/post depolyment API validations.
+- Check for side-effects in a database (currently PostgreSQL or mySQL) after each API call.
+- Run locally, or use with [Github Actions](https://github.com/marketplace/actions/run-api-test-with-witcher) for pre/post deployment API validation.
 - Contributions welcome!
 
 # Prerequisites
