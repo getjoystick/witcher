@@ -1,13 +1,15 @@
 # Witcher API Tester
 
-![witcher-450](https://github.com/getjoystick/witcher/assets/127026916/c8fe7f1e-3f64-4b4b-9cb4-84b6f589350f)
+![witcher-icon-250](https://github.com/getjoystick/witcher/assets/1041852/38a968f9-7e26-4cb7-8da0-e2027bb3018f)
 
-Witcher is a lightweight, easy to maintain and fast API tester that is configuration driven.
+Witcher is a lightweight, easy to maintain, and fast API tester that is configuration driven.
 
-- No need to learn a complicated system
+- No need to learn a complicated system.
 - Make API calls, then validate any part of the response header or body.
-- Set variables based on the response, then use them in subsequent tests/calls.
+- Set variables using any part of the response body or header, then use the variables in subsequent tests/calls.
 - Check for side-effects in a database after each call.
+- Run locally, or use with Github Actions for pre/post depolyment API validations.
+- Contributions welcome!
 
 # Prerequisites
 
@@ -16,7 +18,7 @@ Witcher is a lightweight, easy to maintain and fast API tester that is configura
 
 # Installation
 
-Witcher can be run using the `npx` command. This will download the latest version of Witcher and run it.
+Witcher can be run using the `npx` command. This will download the latest version of Witcher and run it. Make sure you have npx installed globally (`npm i -g npx`).
 
 ```bash
 npx witcher
@@ -28,27 +30,36 @@ Otherwise, you can install `witcher` globally with `npm i -g witcher` which will
 > If you use global installation – make sure your "PATH" environment variable contains the
 > folder where `npm` puts the binaries
 
-# First-time setup
+# TLDR; Jump Right In!
 
-## Local Configs
+- Download the two files in the `witcher-demo` folder of this repo.
+- Run `npx witcher` in the same directory as the two files. Press enter again to proceed with default options. ![Step 1](https://github.com/getjoystick/witcher/assets/1041852/5bca0f23-4108-49b0-9a52-711804b64426)
+- Select option 2 to run locally. ![Step 2](https://github.com/getjoystick/witcher/assets/1041852/318339e3-e061-4e36-a87a-7d1db5ecc73b)
+- For the set setup config, select `demo-setup.json`. ![Step 3](https://github.com/getjoystick/witcher/assets/1041852/38c9974a-7f0a-482b-a99d-9e2f0f0bf2a6)
+- Continue without secrets, since we don't need to check a DB. ![Step 4](https://github.com/getjoystick/witcher/assets/1041852/6fa4e380-6a0e-483a-9083-9aea577fd1c4)
+- The test will run and you will get a report! ![Step 5](https://github.com/getjoystick/witcher/assets/1041852/c46a58fc-5366-4760-b550-5947753eed6a)
 
-- Update `./test-json/testSetup.json` and `./test-json/testUnits.json` to fit your API.
+# Setup the Configuration Files
 
-## Running the Project with Joystick-Hosted Configs
+## Running Using Local Configs
 
-Joystick is a robust remote configuration service. Using Witcher with Joystick-hosted configs means your entire team can collaborate and update your tests.
+`./test-json/testSetup.json` and `./test-json/testUnits.json` are the templates to start from. They have comments inside to help guide you. Update them to fit your API.
+
+## Running with Joystick Hosted Configs
+
+[Joystick](https://www.getjoystick.com/) is a robust and modern remote configuration service. Using Witcher with Joystick-hosted configs means your entire team can collaborate and update your tests.
 
 ### Setup / First Time
 
-- Create an account on [Joystick](https://app.getjoystick.com/)
-- Create an organization, product and environment for your testing configs.
-- Add the test suite:
+- [Create an account](https://app.getjoystick.com/) on Joystick.
+- In Joystick, find or create an appropriate environment for your test configs.
+- [Add](https://docs.getjoystick.com/content-management-configs/) the test configs to Joystick:
   - Click on "Create config" on the page of environment
   - Paste the contents of `./test-json/testUnits.json` into editor
-  - Change the test suite to fit your API
-  - Specify the name of the test suite in the "Content ID" field (e.g. "testsuite-dev-billing")
+  - Change the config to fit your API
+  - Specify the name of the config in the "Content ID" field (e.g. "testsuite-dev-billing")
   - Click on "Save"
-- Add the root config:
+- Add the root setup config:
   - Click on "Create config"
   - Paste the contents of `./test-json/testSetup.json` into editor
   - Change the root config to fit your API
@@ -58,7 +69,7 @@ Joystick is a robust remote configuration service. Using Witcher with Joystick-h
 
 # Running in interactive mode
 
-## Local Configs
+## Running Using Local Configs
 
 - Run `npx witcher`
 - Options to Toggle:
@@ -68,7 +79,7 @@ Joystick is a robust remote configuration service. Using Witcher with Joystick-h
 - Select one of the files placed in the current working directory
 - Optionally select database connection secrets from `./secrets` folder
 
-## Joystick-Hosted Configs
+## Running with Joystick Hosted Configs
 
 - `npx witcher`
 - Choose options:
@@ -109,7 +120,7 @@ npx witcher joystick --apiKey 'xxxxxxxxxxx' --configId 'test-webserver-setup' --
 
 The application will exit with code `0` if all tests passed and `1` if at least one test failed.
 
-# Notes
+# Notes and Details
 
 - Supporting PostgreSQL and mySQL database out-of-the-box. Can be easily extended.
 - Witcher requires two configurations: a Test Setup "root" config and one or more Test Units config. The Test Setup config can reference or more Test Units config.
@@ -124,9 +135,9 @@ The application will exit with code `0` if all tests passed and `1` if at least 
 
 At least two configs are required to run Witcher: the "root" config and a test units config with one or more API tests defined.
 
-### Running Logic
+### Execution Logic
 
-![Screenshot 2023-08-08 at 11 06 12 AM](https://github.com/getjoystick/witcher/assets/127026916/04b3494e-8360-444a-94c2-37d6b11bd1e3)
+![Screenshot 2023-08-19 at 3 51 32 PM](https://github.com/getjoystick/witcher/assets/1041852/51924c9c-3ea5-4b55-b621-ff46ffb83862)
 
 ## The Test Setup "Root" Config
 
@@ -163,7 +174,7 @@ This is entry point / starting point of a test run. This should be a .json file 
 }
 ```
 
-### Debug Mode
+### Debug Options
 
 - You can show the full error, if any, with the request by setting `testRunningOptions.debugResponseOptions.showRequestErrors`.
 - You can show the full response status code, headers and body by setting the options in the Test Setup config `testRunnerOptions.debugResponseOptions` object. Reference testSetup.json for usage.
@@ -199,7 +210,7 @@ This should be a .json file that is in the same folder as your root config.
 
 ### A Single Test Unit
 
-![Screenshot 2023-08-08 at 11 05 08 AM](https://github.com/getjoystick/witcher/assets/127026916/afbffe80-c98e-4039-954a-eeb1d710b1f2)
+![Screenshot 2023-08-19 at 3 45 11 PM](https://github.com/getjoystick/witcher/assets/1041852/f3d0c4b1-fb54-4170-b6ec-fcd982984f1a)
 
 This is one Test Unit. It goes inside the "testUnits" array of the Test Units config.
 
@@ -207,6 +218,7 @@ This is one Test Unit. It goes inside the "testUnits" array of the Test Units co
 {
   "name": "Create a Widget",
   "description": "Create a new widget for ${ productId }",
+  "waitForMs": 1000,
   "endpointDetails": {
     "url": "${ endpointRoot }/product/${ productId }/widget/witcher-widget-${ random.hash }",
     "method": "POST",
@@ -272,9 +284,9 @@ This is one Test Unit. It goes inside the "testUnits" array of the Test Units co
 
 - Variables can be set using the "initialTestRunVariables" object in the setup config, or using any body or header parameter from a response to any test.
 - Variables set in initialTestRunVariables are available immediately to any test.
-- Variables set in Test Unit are only available after the are set, then can be used in any Test Units that come after.
+- Variables set in Test Unit are only available after they are set; then can be used in any Test Units that come after.
 
-You can set variables that can be used in subsequent tests by with data from any part of the body or header of an API response. See the `variablesToSet` array in the above example. Use `responseBody` or `responseHeader` as the start of your path. Below are some valid examples of how to set variables based on a response from an API call.
+You can set variables that can be used in subsequent tests using data from any part of the body or header of an API response. See the `variablesToSet` array in the below example. Use `responseBody` or `responseHeader` as the start of your path. Here are some examples of setting variables based on a response from an API call.
 
 ```jsonc
 {
@@ -306,11 +318,11 @@ You can set variables that can be used in subsequent tests by with data from any
 ### Using Variables
 
 - Anywhere within the test unit, you can use this pattern `${ myVar }` to use a variable you have previously set.
-- The Test Unit must still validate as JSON, so variable declarations must be used within strings. Thus, they can be used as keys as well!
+- The Test Unit must still validate as JSON, so variable declarations must be used within strings. They can be used as keys as well!
 - For numbers or boolean types, declare the type inside the curly brackets with immediately enclosing double quotes: `"myNumber": "${ someId : number }"` -> OUTPUT `"myNumber": 123`.
-- `"myString": "Doing something with ${ myVar }!!"` is supported
-- `"myNumber": "${ random.number : number }"` is supported
-- `"myBoolean": "${ myBoolean : boolean }"` is supported
+- `"myString": "Doing something with ${ myVar }!!"` is valid
+- `"myNumber": "${ random.number : number }"` is valid
+- `"myBoolean": "${ myBoolean : boolean }"` is valid
 
 ```jsonc
 {
@@ -501,15 +513,15 @@ Get the config!
 
 ......................................................Finished!
 
-   📋  Test Report  📋
-   ------------------
+   🐺⚔️  Test Report  🐺⚔️
+   ------------------------------------
    📋  Total Tests.........8
    ✅  Successful Tests....7
    ❌  Failed Tests........1
-   ------------------
+   ------------------------------------
    ❌  Failed Tests:
    - Create a Folder
-   ------------------
+   ------------------------------------
 
 ```
 
