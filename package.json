@@ -1,9 +1,21 @@
 {
   "name": "witcher",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Lightweight and fast API testing framework with database checking.",
   "main": "./dist/index.mjs",
   "type": "module",
+  "keywords": [
+    "cli",
+    "test",
+    "testing",
+    "automation",
+    "api",
+    "api test",
+    "api testing",
+    "integration",
+    "white box",
+    "black box"
+  ],
   "bin": "dist/index.mjs",
   "scripts": {
     "test": "npm run test:unit && npm run test:integration",
@@ -16,8 +28,10 @@
     "lint": "eslint . && prettier . --check",
     "lint-fix": "prettier . --write && eslint . --fix"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "getjoystick",
+  "repository": "github:getjoystick/witcher",
+  "homepage": "https://github.com/getjoystick/witcher",
+  "license": "MIT",
   "devDependencies": {
     "@tsconfig/node18": "^18.2.0",
     "@types/args": "^5.0.0",
@@ -48,5 +62,9 @@
   },
   "overrides": {
     "semver": "^6.3.1"
+  },
+  "bugs": {
+    "url": "https://github.com/getjoystick/witcher/issues",
+    "email": "code@getjoystick.com"
   }
 }

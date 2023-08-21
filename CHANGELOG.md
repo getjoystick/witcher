@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2023-08-21
+
+### Added
+
+- Keywords, repository and homepage in `package.json`
+- Demo configurations as an example of how to use `witcher`
+
+### Changed
+
+- README with TLDR section and summary about the project
+- License updated to `MIT`
+
 ## [0.2.0] - 2023-08-18
 
 ### Added
