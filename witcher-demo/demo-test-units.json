@@ -1,0 +1,107 @@
+{
+  "testUnits": [
+    {
+      "name": "Get a Cat Fact",
+      "description": "Get a random fact about cats!",
+      "endpointDetails": {
+        "url": "https://catfact.ninja/fact",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "validation": {
+        "assertions": [
+          {
+            "path": "responseBody.fact",
+            "assertion": "typeof string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Get a Random Activity",
+      "description": "Get a random ${activityType-varFromSetupConfig} activity.",
+      "waitForMs": 500,
+      "endpointDetails": {
+        "url": "http://www.boredapi.com/api/activity?type=${activityType-varFromSetupConfig}",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "validation": {
+        "assertions": [
+          {
+            "path": "responseBody.activity",
+            "assertion": "typeof string"
+          },
+          {
+            "path": "responseBody.participants",
+            "assertion": "value >= 1"
+          },
+          {
+            "path": "responseBody.type",
+            "assertion": "value = '${activityType-varFromSetupConfig}'"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Get a Random User",
+      "description": "Get a random user, then save their name to a variable.",
+      "endpointDetails": {
+        "url": "https://randomuser.me/api/",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "validation": {
+        "assertions": [
+          {
+            "path": "responseBody.results",
+            "assertion": "length >= 1"
+          },
+          {
+            "path": "responseBody.results[0].gender",
+            "assertion": "typeof string"
+          },
+          {
+            "path": "responseBody.results.0.name",
+            "assertion": "typeof object"
+          }
+        ]
+      },
+      "variablesToSet": [
+        {
+          "variableName": "randomName",
+          "path": "responseBody.results.0.name.first"
+        }
+      ]
+    },
+    {
+      "name": "Predict Age Based on Name",
+      "description": "Predict the age of \"${randomName}\" using the agify.io api.",
+      "endpointDetails": {
+        "url": "https://api.agify.io?name=${randomName}",
+        "method": "GET",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "validation": {
+        "assertions": [
+          {
+            "path": "responseBody.name",
+            "assertion": "value = '${randomName}'"
+          },
+          {
+            "path": "responseBody.age",
+            "assertion": "typeof number"
+          }
+        ]
+      }
+    }
+  ]
+}

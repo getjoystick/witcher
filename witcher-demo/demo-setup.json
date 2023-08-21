@@ -1,0 +1,14 @@
+{
+  "testUnitsConfigs": ["demo-test-units.json"],
+  "initialTestRunVariables": {
+    "activityType-varFromSetupConfig": "relaxation"
+  },
+  "testRunnerOptions": {
+    "debugResponseOptions": {
+      "showRequestErrors": false,
+      "showStatusCode": false,
+      "showHeaders": false,
+      "showBody": true
+    }
+  }
+}
