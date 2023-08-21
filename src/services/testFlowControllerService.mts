@@ -74,8 +74,6 @@ export class TestFlowControllerService {
         };
       }
     }
-
-    console.log("Standard db options: ", result);
     return result;
   }
 
